@@ -19,11 +19,19 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'Shougo/vimproc.vim'
-"Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/vimfiler.vim'
 Plugin 'rking/ag.vim'
+Bundle 'ervandew/supertab'
+" Track the engine.
+Bundle 'SirVer/ultisnips'
+Plugin 'rdnetto/YCM-Generator'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
+Plugin 'bling/vim-airline'
 
+Plugin 'vim-airline/vim-airline-themes'
 " ... easy align
 Plugin 'junegunn/vim-easy-align'
 
@@ -40,6 +48,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
 
 Plugin 'flazz/vim-colorschemes'
+Plugin 'gorodinskiy/vim-coloresque'
 Plugin 'vimwiki/vimwiki'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
@@ -74,6 +83,9 @@ filetype plugin indent on    " required
 "   catch
 "endtry
 
+
+" colorscheme jellybeans
+colorscheme elflord
 "Fix Whitespace color settings
 if (exists('+colorcolumn'))
         set colorcolumn=80
@@ -129,6 +141,8 @@ set clipboard=unnamed
 set backspace=indent,eol,start
 " vim-airline
 set laststatus=2
+" set color term to 256 colors
+set t_Co=256
 autocmd FileType * setlocal formatoptions-=cro
 autocmd vimenter * NERDTree
 
@@ -150,3 +164,48 @@ let g:vimwiki_list = [{'path': '/Users/yubao/OneDrive/vimwiki', 'path_html': '~/
 let g:vimwiki_hl_headers = 1
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe (YCM) config {{{1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" When this option is set to 1, YCM's identifier completer will also
+" collect
+" identifiers from strings and comments. Otherwise, the text in comments and
+" strings will be ignored.
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" source: https://github.com/Valloric/YouCompleteMe
+
+" disable preview window on auto-complete:
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
+
+
+" try to fix random freeze on autocomplete:
+let g:ycm_register_as_syntastic_checker = 0
+
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+
+" source:
+" https://github.com/Valloric/YouCompleteMe#i-get-a-weird-window-at-the-top-of-my-file-when-i-use-the-semantic-engine
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouCompleteMe (YCM), SuperTab, and UltiSnips config {{{1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+"let g:UltiSnipsExpandTrigger = "<S-tab>"
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
+" from ultisnips help:
+" Supertab - UltiSnips has built-in support for Supertab. Just use a
+" recent
+" enough version of both plugins and <tab> will either expand a snippet
+" or defer
+" to Supertab for expansion.
