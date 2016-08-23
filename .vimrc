@@ -72,20 +72,9 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-"Colorscheme
-"call plug#begin('~/.vim/plugged')
-"Plug 'altercation/vim-colors-solarized'
-"call plug#end()
-" -- solarized personal conf
-"set background=dark
-"try
-"   colorscheme solarized
-"   catch
-"endtry
-
-
-" colorscheme jellybeans
-colorscheme elflord
+syntax on
+colorscheme jellybeans
+" colorscheme elflord
 "Fix Whitespace color settings
 if (exists('+colorcolumn'))
         set colorcolumn=80
@@ -160,7 +149,7 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 "nnoremap Y "*yy
 
 "vimwiki settings
-let g:vimwiki_list = [{'path': '/Users/yubao/OneDrive/vimwiki', 'path_html': '~/public_html/'}]
+let g:vimwiki_list = [{'path': '/Users/jenkins/Documents/OneDrive/vimwiki', 'path_html': '~/public_html/'}]
 let g:vimwiki_hl_headers = 1
 
 
