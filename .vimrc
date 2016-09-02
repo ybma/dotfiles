@@ -57,6 +57,9 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'scrooloose/syntastic'
+Plugin 'nvie/vim-flake8'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -77,8 +80,8 @@ colorscheme jellybeans
 " colorscheme elflord
 "Fix Whitespace color settings
 if (exists('+colorcolumn'))
-        set colorcolumn=80
-            highlight ColorColumn ctermbg=9
+  set colorcolumn=80
+  highlight ColorColumn ctermbg=9
 endif
 
 "...
@@ -102,40 +105,65 @@ nnoremap <space><space> :split<cr> :<C-u>Unite -start-insert file_rec/async:~../
 " nmap * :Ag <c-r>=expand("<cword>")<cr><cr>
 nnoremap <space>/ :Ag<space>
 
+set nu
+" select something with the mouse will result in a visual mode selection
+"set mouse=a
+set wrap
+set encoding=utf-8
+set linebreak
+set syntax=on
+" set tabs to have 4 spaces
+set ts=4
+" indent when moving to the next line while writing code
+set autoindent
+" expand tabs into spaces
+set expandtab
+" when using the >> or << commands, shift lines by 4 spaces
+set shiftwidth=4
+set softtabstop=4
+set hlsearch
+set incsearch
+set nobackup
+set noswapfile
+set ignorecase
+set tags=tags;
+set autochdir
+set smartindent
+set clipboard=unnamed
+set backspace=indent,eol,start
+" enable folding
+set foldmethod=indent
+set foldlevel=99
+" vim-airline
+set laststatus=2
+" set color term to 256 colors
+set t_Co=256
+" show the matching part of the pair for [] {} and ()
+set showmatch
+
+autocmd FileType * setlocal formatoptions-=cro
+" let NerdTreDTreeShowHidden=1
+" Start NERDTree
+autocmd vimenter * NERDTree
+" Go to previous (last accessed) window.
+autocmd VimEnter * wincmd p
+
+map ,/ </<C-X><C-O>
+
 " Ramap 'jj' to excape insert mode
 inoremap jj <Esc>
 
 " Easy align interactive
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
-set nu
-set mouse=a
-set wrap
-set linebreak
-set syntax=on
-set ts=2
-set expandtab
-set shiftwidth=2
-set softtabstop=2
-set hlsearch
-set incsearch
-set nobackup
-set noswapfile
-set ignorecase
-set autoindent
-set tags=tags;
-set autochdir
-set smartindent
-set clipboard=unnamed
-set backspace=indent,eol,start
-" vim-airline
-set laststatus=2
-" set color term to 256 colors
-set t_Co=256
-autocmd FileType * setlocal formatoptions-=cro
-autocmd vimenter * NERDTree
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+" Enable folding with the spacebar
+nnoremap <space> za
 
-map ,/ </<C-X><C-O>
 
 "cursor shape settings
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -185,6 +213,10 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
+"  autocomplete window goes away when you’re done with it
+let g:ycm_autoclose_preview_window_after_completion=1
+" space-g will goto definition of currently on
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " better key bindings for UltiSnipsExpandTrigger
 "let g:UltiSnipsExpandTrigger = "<S-tab>"
@@ -198,3 +230,42 @@ let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 " enough version of both plugins and <tab> will either expand a snippet
 " or defer
 " to Supertab for expansion.
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SimpylFold
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:SimpylFold_docstring_preview=1
+
+" python syntax checking
+let python_highlight_all=1
+syntax on
+
+" python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+"
+" Python PEP8 Indentation
+"
+au BufNewFile,BufRead *.py
+    \ set tabstop=4         |
+    \ set softtabstop=4     |
+    \ set shiftwidth=4      |
+    \ set textwidth=79      |
+    \ set expandtab         |
+    \ set autoindent        |
+    \ set fileformat=unix
+
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2        |
+    \ set softtabstop=2    |
+    \ set shiftwidth=2     |
+
+
