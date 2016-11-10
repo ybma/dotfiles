@@ -75,15 +75,6 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-syntax on
-colorscheme jellybeans
-" colorscheme elflord
-"Fix Whitespace color settings
-if (exists('+colorcolumn'))
-  set colorcolumn=80
-  highlight ColorColumn ctermbg=9
-endif
-
 "...
 "Unite
 "   depend on vimproc
@@ -149,6 +140,19 @@ autocmd vimenter * NERDTree
 autocmd VimEnter * wincmd p
 
 map ,/ </<C-X><C-O>
+
+syntax on
+colorscheme jellybeans
+" colorscheme elflord
+" Shortcut to rapidly toggle `set list`
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+"Fix Whitespace color settings
+if (exists('+colorcolumn'))
+  set colorcolumn=80
+  highlight ColorColumn ctermbg=9
+endif
+
 
 " Ramap 'jj' to excape insert mode
 inoremap jj <Esc>
@@ -254,6 +258,9 @@ EOF
 "
 " Python PEP8 Indentation
 "
+
+"au BufRead,BufNewFile *.js set sw=2 sts=2
+
 au BufNewFile,BufRead *.py
     \ set tabstop=4         |
     \ set softtabstop=4     |
@@ -263,9 +270,8 @@ au BufNewFile,BufRead *.py
     \ set autoindent        |
     \ set fileformat=unix
 
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2        |
-    \ set softtabstop=2    |
-    \ set shiftwidth=2     |
+au BufNewFile,BufRead *.js set sw=2 sts=2
+au BufRead,BufNewFile *.html set sw=2 sts=2
+au BufRead,BufNewFile *.css set sw=2 sts=2
 
 
